@@ -131,8 +131,8 @@ defmodule Chatbot.Bot do
         AliasEntity.new(name, image, senderEmail)
           |> Datastore.insertEntity(&AliasEntity.toEntity/1)
 
-        imageWithText("Alias created for #{senderEmail}", image,
-                      "to view: view #{name}\nto use: meme #{name} \"top\" \"bottom\"")
+        imageWithText("Template created for #{senderEmail}", image,
+                      "to view: view #{name}\nto use: create #{name} \"top\" \"bottom\"")
       _entity ->
         textCard("Error", "Template '#{name}' already exists.\nType 'view #{name}' to see it.")
     end
