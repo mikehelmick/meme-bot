@@ -9,11 +9,11 @@ defmodule Chatbot.Bot do
   defp addHeader(card, nil), do: card
   defp addHeader(card, ""), do: addHeader(card, nil)
   defp addHeader(card, title) do
-    Map.put(card, "header", %{"title": title})
+    Map.put(card, "header", %{"title" => title})
   end
 
   defp textWidget(text) do
-    %{"textParagraph": %{"text": text}}
+    %{textParagraph: %{text: text}}
   end
 
   defp imageWidget(imageUrl) do
