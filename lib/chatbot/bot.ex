@@ -17,35 +17,35 @@ defmodule Chatbot.Bot do
   end
 
   defp imageWidget(imageUrl) do
-    %{"image": %{"imageUrl": imageUrl}}
+    %{image: %{imageUrl: imageUrl}}
   end
 
   defp buttonWidget(text, link) do
-    %{"buttons": [
-      %{"textButton": %{
-        "text": text,
-        "onClick": %{"openLink": %{"url": link}}
+    %{buttons: [
+      %{textButton: %{
+        text: text,
+        onClick: %{openLink: %{url: link}}
        }}]}
   end
 
   defp textCard(title, text) do
-    %{"cards": [
-      %{"sections": [%{"widgets": [textWidget(text)]}]}
+    %{cards: [
+      %{sections: [%{widgets: [textWidget(text)]}]}
         |> addHeader(title)
       ]}
   end
 
   defp keyValue(top, content) do
-    %{"keyValue":
-      %{"topLabel": top,
-        "content": content
+    %{keyValue:
+      %{topLabel: top,
+        content: content
       }}
   end
 
   def imageWithButton(title, imageUrl, buttonText) do
-    %{"cards": [
-      %{"sections": [
-        %{"widgets": [
+    %{cards: [
+      %{sections: [
+        %{widgets: [
           imageWidget(imageUrl),
           buttonWidget(buttonText, imageUrl)]}]}
         |> addHeader(title)
@@ -53,9 +53,9 @@ defmodule Chatbot.Bot do
   end
 
   def imageWithText(title, imageUrl, text) do
-    %{"cards": [
-      %{"sections": [
-        %{"widgets": [
+    %{cards: [
+      %{sections: [
+        %{widgets: [
           imageWidget(imageUrl),
           textWidget(text)]}]}
         |> addHeader(title)
@@ -64,9 +64,9 @@ defmodule Chatbot.Bot do
 
 
   def help(_prefix, _params, _command) do
-    %{"cards": [
-      %{"sections": [
-        %{"widgets": [
+    %{cards: [
+      %{sections: [
+        %{widgets: [
           keyValue("Display this message", "help"),
           keyValue("Creates a meme from template + text",
                    "create [template] \"top\" \"bottom\""),
@@ -123,7 +123,6 @@ defmodule Chatbot.Bot do
           |> String.trim()
           |> String.split()
     senderEmail = params["message"]["sender"]["email"]
-    senderName = params["message"]["sender"]["displayName"]
 
     case Datastore.readEntity(AliasEntity.kind(), name, &AliasEntity.parseEntity/1) do
       nil ->
@@ -160,9 +159,9 @@ defmodule Chatbot.Bot do
           nil ->
             textCard("", "There are no templates, you should create one!")
           entityResults ->
-            %{"cards": [
-              %{"sections": [
-                %{"widgets": [
+            %{cards: [
+              %{sections: [
+                %{widgets: [
                   Enum.map(entityResults,
                     fn result -> AliasEntity.parseEntity(result) |> AliasEntity.name() end)
                     |> Enum.join(", ")
@@ -182,7 +181,6 @@ defmodule Chatbot.Bot do
           |> String.trim()
           |> String.split() do
         [] -> ""
-        [nil|_] -> ""
         [x | _] -> x
       end
     n = case Integer.parse(nAsString) do
@@ -195,9 +193,9 @@ defmodule Chatbot.Bot do
     gql = "SELECT * FROM Alias ORDER BY uses DESC LIMIT #{n}"
     case Datastore.queryByGQL(gql) do
       {batch, _query} ->
-        %{"cards": [
-          %{"sections": [
-            %{"widgets":
+        %{cards: [
+          %{sections: [
+            %{widgets:
               List.flatten(Enum.map(batch["entityResults"],
                 fn result ->
                   entity = AliasEntity.parseEntity(result)
