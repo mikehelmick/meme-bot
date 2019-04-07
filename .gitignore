@@ -20,6 +20,12 @@ npm-debug.log
 # this depending on your deployment strategy.
 /priv/static/
 
+# lock files
+mix.lock
+assets/package-lock.json
+
+.elixir_ls
+
 # Files matching config/*.secret.exs pattern contain sensitive
 # data and you should not commit them into version control.
 #
